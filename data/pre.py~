@@ -1,0 +1,14 @@
+import os  
+
+pre_dict='./predict'
+total_pre = os.listdir(pre_dict)  
+
+num=len(total_pre)  
+list1=list(range(num))  
+fpre = open('./infer.txt', 'w')  
+
+for i in list1:  
+    name='./predict/'+total_pre[i]+'\n'  
+    fpre.write(name)
+  
+fpre.close()
