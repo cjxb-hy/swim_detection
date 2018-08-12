@@ -24,8 +24,8 @@ SSD使用一个卷积神经网络实现“端到端”的检测：输入为原�
 
 从SSD的网络结构可以看出，候选矩形框在多个特征图（feature map）上生成，不同的feature map具有的感受野不同，这样可以在不同尺度扫描图像，相对于其他检测方法可以生成更丰富的候选框，从而提高检测精度；另一方面SSD对VGG16的扩展部分以较小的代价实现对候选框的位置和类别得分的计算，整个过程只需要一个卷积神经网络完成，所以速度较快。
 
-## 示例总览
-本示例共包含如下文件：
+## 项目总览
+本项目共包含如下文件：
 
 <table>
 <caption>表1. 示例文件</caption>
@@ -51,7 +51,7 @@ SSD使用一个卷积神经网络实现“端到端”的检测：输入为原�
 ### 数据准备
 1. VOC2007格式数据集制作简介，按照[此文档](https://blog.csdn.net/gulingfengze/article/details/79639111)即可。
 
-2. 数据集：Swim2000，[链接](),将下载好的数据解压，放到data/VOCdevkit/VOC2007/下面。
+2. 数据集：\[[Swim2000]()\],将下载好的数据解压，放到data/VOCdevkit/VOC2007/下面。
 
 3. 进入```data/VOCdevkit/VOC2007```目录，运行```python split.py```即可在```data/VOCdevkit/VOC2007/ImageSets/Main```下生成test.txt、train.txt、trainval.txt和val.txt。核心函数为：
 
@@ -66,7 +66,7 @@ SSD使用一个卷积神经网络实现“端到端”的检测：输入为原�
                 fval.write(name)  
         else:  
             ftest.write(name)
-         ```
+     ```
 
 4. 进入```data```目录，运行```python prepare_voc_data.py```即可生成```trainval.txt```和```test.txt```。核心函数为：
 
@@ -136,7 +136,7 @@ VGG-SDD 300x300在Swim2000数据集上的mAP可达到88.53%。
 执行```python eval.py```即可对模型进行评估，```eval.py```的关键执行逻辑如下：
 
 ```python
-paddle.init(use_gpu=True, trainer_count=4)  # use 4 gpus
+paddle.init(use_gpu=True, trainer_count=1)  # use 1 gpus
 
 data_args = data_provider.Settings(
     data_dir='./data',
