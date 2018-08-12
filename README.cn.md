@@ -38,7 +38,10 @@ SSD使用一个卷积神经网络实现“端到端”的检测：输入为原�
 <tr><td>data_provider.py</td><td>数据处理脚本，生成训练、评估或检测所需数据</td></tr>
 <tr><td>config/pascal_voc_conf.py</td><td>神经网络超参数配置文件</td></tr>
 <tr><td>data/label_list</td><td>类别列表</td></tr>
-<tr><td>data/prepare_voc_data.py</td><td>准备训练PASCAL VOC数据列表</td></tr>
+<tr><td>data/pre.py</td><td>创建infer数据列表</td></tr>
+<tr><td>data/prepare_voc_data.py</td><td>准备训练及测试数据列表</td></tr>
+<tr><td>vgg/vgg_model.tar.gz</td><td>预训练模型</td></tr>
+<tr><td>data/VOCdevkit/VOC2007/split.py</td><td>划分训练集、测试集</td></tr>
 </table>
 
 训练阶段需要对数据做预处理，包括裁剪、采样等，这部分操作在```image_util.py```和```data_provider.py```中完成。
