@@ -191,6 +191,7 @@ infer(
 <img src="images/1.jpg" height=150 width=200 hspace='10'/>
 <img src="images/2.jpg" height=150 width=200 hspace='10'/>
 <img src="images/3.jpg" height=150 width=100 hspace='10'/>
+
 图3. SSD300x300 检测可视化示例
 </p>
 
