@@ -4,7 +4,7 @@
 
 # SSD目标检测
 ## 概述
-SSD全称：Single Shot MultiBox Detector，是目标检测领域较新且效果较好的检测算法之一\[[1](#引用)\]，有着检测速度快且检测精度高的优点。
+SSD全称：Single Shot MultiBox Detector，是目标检测领域较新且效果较好的检测算法之一\[[1](#引用)\]，有着检测速度快且检测精度高的优点。本文为对户外水域游泳者的检测与识别。
 
 ## SSD原理
 SSD使用一个卷积神经网络实现“端到端”的检测：输入为原始图像，输出为检测结果，无需借助外部工具或流程进行特征提取、候选框生成等。论文中SSD使用VGG16\[[2](#引用)\]作为基础网络进行图像特征提取。但SSD对原始VGG16网络做了一些改变：
@@ -51,7 +51,7 @@ SSD使用一个卷积神经网络实现“端到端”的检测：输入为原�
 ### 数据准备
 1. VOC2007格式数据集制作简介，按照[此文档](https://blog.csdn.net/gulingfengze/article/details/79639111)即可。
 
-2. 数据集：Swim2000\[[1](#引用)\]，将下载好的数据解压，放到data/VOCdevkit/VOC2007/下面。
+2. 数据集：Swim2000，[链接](),将下载好的数据解压，放到data/VOCdevkit/VOC2007/下面。
 
 3. 进入```data/VOCdevkit/VOC2007```目录，运行```python split.py```即可在```data/VOCdevkit/VOC2007/ImageSets/Main```下生成test.txt、train.txt、trainval.txt和val.txt。核心函数为：
 
@@ -196,66 +196,6 @@ infer(
 </p>
 
 
-## 自有数据集
-在自有数据上训练PaddlePaddle SSD需要完成两个关键准备，首先需要适配网络可以接受的输入格式，这里提供一个推荐的结构，以```train.txt```为例
-
-```text
-image00000_file_path    image00000_annotation_file_path
-image00001_file_path    image00001_annotation_file_path
-image00002_file_path    image00002_annotation_file_path
-...
-```
-
-文件共两列，以空白符分割，第一列为图像文件的路径，第二列为对应标注数据的文件路径。对图像文件的读取比较直接，略微复杂的是对标注数据的解析，本示例中标注数据使用xml文件存储，所以需要在```data_provider.py```中对xml解析，核心逻辑如下：
-
-```python
-bbox_labels = []
-root = xml.etree.ElementTree.parse(label_path).getroot()
-for object in root.findall('object'):
-    bbox_sample = []
-    # start from 1
-    bbox_sample.append(float(settings.label_list.index(
-         object.find('name').text)))
-    bbox = object.find('bndbox')
-    difficult = float(object.find('difficult').text)
-    bbox_sample.append(float(bbox.find('xmin').text)/img_width)
-    bbox_sample.append(float(bbox.find('ymin').text)/img_height)
-    bbox_sample.append(float(bbox.find('xmax').text)/img_width)
-    bbox_sample.append(float(bbox.find('ymax').text)/img_height)
-    bbox_sample.append(difficult)
-    bbox_labels.append(bbox_sample)
-```
-
-这里一条标注数据包括：label、xmin、ymin、xmax、ymax和is\_difficult，is\_difficult表示该object是否为难例，实际中如果不需要，只需把该字段置零即可。自有数据也需要提供对应的解析逻辑，假设标注数据（比如image00000\_annotation\_file\_path）存储格式如下：
-
-```text
-label1 xmin1 ymin1 xmax1 ymax1
-label2 xmin2 ymin2 xmax2 ymax2
-...
-```
-
-每行对应一个物体，共5个字段，第一个为label（注背景为0，需从1编号），剩余4个为坐标，对应的解析逻辑可更改为如下：
-
-```python
-bbox_labels = []
-with open(label_path) as flabel:
-    for line in flabel:
-        bbox_sample = []
-        bbox = [float(i) for i in line.strip().split()]
-        label = bbox[0]
-        bbox_sample.append(label)
-        bbox_sample.append(bbox[1]/float(img_width))
-        bbox_sample.append(bbox[2]/float(img_height))
-        bbox_sample.append(bbox[3]/float(img_width))
-        bbox_sample.append(bbox[4]/float(img_height))
-        bbox_sample.append(0.0)
-        bbox_labels.append(bbox_sample)
-```
-
-**同时需要注意根据图像大小及检测物体的大小等更改网络结构相关的超参数，请仿照```config/vgg_config.py```创建自己的配置文件，参数设置经验请参考论文\[[1](#引用)\]。**
-
 ## 引用
 1. Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg. [SSD: Single shot multibox detector](https://arxiv.org/abs/1512.02325). European conference on computer vision. Springer, Cham, 2016.
 2. Simonyan, Karen, and Andrew Zisserman. [Very deep convolutional networks for large-scale image recognition](https://arxiv.org/abs/1409.1556). arXiv preprint arXiv:1409.1556 (2014).
-3. [The PASCAL Visual Object Classes Challenge 2007](http://host.robots.ox.ac.uk/pascal/VOC/voc2007/index.html)
-4. [Visual Object Classes Challenge 2012 (VOC2012)](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html)
