@@ -188,10 +188,9 @@ infer(
 还有一个可视化脚本，直接运行```python visual.py```即可，须指定输出检测结果路径及输出目录，默认可视化后图像保存在```./visual_res```，下面是用训练好的模型infer部分图像并可视化的效果：
 
 <p align="center">
-<img src="images/vis_1.jpg" height=150 width=200 hspace='10'/>
-<img src="images/vis_2.jpg" height=150 width=200 hspace='10'/>
-<img src="images/vis_3.jpg" height=150 width=100 hspace='10'/>
-<img src="images/vis_4.jpg" height=150 width=200 hspace='10'/> <br />
+<img src="images/1.jpg" height=150 width=200 hspace='10'/>
+<img src="images/2.jpg" height=150 width=200 hspace='10'/>
+<img src="images/.jpg" height=150 width=100 hspace='10'/>
 图3. SSD300x300 检测可视化示例
 </p>
 
