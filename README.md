@@ -35,7 +35,15 @@
 ### 数据准备
 1. VOC2007格式数据集制作简介，按照[此文档](https://blog.csdn.net/gulingfengze/article/details/79639111)即可。
 
-2. 数据集：Swim2000\[[下载地址](https://pan.baidu.com/s/1KPC4tZZDwOjCnFLhzCZ5aA)\],将下载好的数据解压，放到data/VOCdevkit/VOC2007/下面。
+2. 数据集：Swim2000\[[下载地址](https://pan.baidu.com/s/1KPC4tZZDwOjCnFLhzCZ5aA)\],将下载好的数据解压，放到data/VOCdevkit/VOC2007/下面，部分数据如下所示：
+
+<p align="center">
+<img src="images/1.jpg" height=150 width=200 hspace='10'/>
+<img src="images/2.jpg" height=150 width=200 hspace='10'/>
+<img src="images/3.jpg" height=150 width=200 hspace='10'/>
+
+图1. Swim2000部分数据
+</p>
 
 3. 进入```data/VOCdevkit/VOC2007```目录，运行```python split.py```即可在```data/VOCdevkit/VOC2007/ImageSets/Main```下生成test.txt、train.txt、trainval.txt和val.txt。核心函数为：
 
