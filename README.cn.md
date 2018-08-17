@@ -2,27 +2,9 @@
 
 ---
 
-# SSD目标检测
+# 游泳者目标检测
 ## 概述
-SSD全称：Single Shot MultiBox Detector，是目标检测领域较新且效果较好的检测算法之一\[[1](#引用)\]，有着检测速度快且检测精度高的优点。本文为对户外水域游泳者的检测与识别。
 
-## SSD原理
-SSD使用一个卷积神经网络实现“端到端”的检测：输入为原始图像，输出为检测结果，无需借助外部工具或流程进行特征提取、候选框生成等。论文中SSD使用VGG16\[[2](#引用)\]作为基础网络进行图像特征提取。但SSD对原始VGG16网络做了一些改变：
-
-1. 将最后的fc6、fc7全连接层变为卷积层，卷积层参数通过对原始fc6、fc7参数采样得到。
-2. 将pool5层的参数由2x2-s2（kernel大小为2x2，stride size为2）更改为3x3-s1-p1（kernel大小为3x3，stride size为1，padding size为1）。
-3. 在conv4\_3、conv7、conv8\_2、conv9\_2、conv10\_2及pool11层后面接了priorbox层，priorbox层的主要目的是根据输入的特征图（feature map）生成一系列的矩形候选框。更详细的介绍可参考\[[1](#引用)\]。
-
-下图为模型（输入图像尺寸：300x300）的总体结构：
-
-<p align="center">
-<img src="images/ssd_network.png" width="900" height="250" hspace='10'/> <br/>
-图1. SSD 网络结构
-</p>
-
-图中每个矩形盒子代表一个卷积层，最后两个矩形框分别表示汇总各卷积层输出结果和后处理阶段。在预测阶段，网络会输出一组候选矩形框，每个矩形包含：位置和类别得分。图中倒数第二个矩形框即表示网络的检测结果的汇总处理。由于候选矩形框数量较多且很多矩形框重叠严重，这时需要经过后处理来筛选出质量较高的少数矩形框，主要方法有非极大值抑制（Non-maximum Suppression）。
-
-从SSD的网络结构可以看出，候选矩形框在多个特征图（feature map）上生成，不同的feature map具有的感受野不同，这样可以在不同尺度扫描图像，相对于其他检测方法可以生成更丰富的候选框，从而提高检测精度；另一方面SSD对VGG16的扩展部分以较小的代价实现对候选框的位置和类别得分的计算，整个过程只需要一个卷积神经网络完成，所以速度较快。
 
 ## 项目总览
 本项目共包含如下文件：
@@ -194,8 +176,3 @@ infer(
 
 图3. SSD300x300 检测可视化示例
 </p>
-
-
-## 引用
-1. Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu, Alexander C. Berg. [SSD: Single shot multibox detector](https://arxiv.org/abs/1512.02325). European conference on computer vision. Springer, Cham, 2016.
-2. Simonyan, Karen, and Andrew Zisserman. [Very deep convolutional networks for large-scale image recognition](https://arxiv.org/abs/1409.1556). arXiv preprint arXiv:1409.1556 (2014).
