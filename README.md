@@ -6,7 +6,7 @@
 
 # 游泳者目标检测
 ## 概述
-
+本系统针对户外野泳者设计。利用无人机拍摄水面情况，使用PaddlePaddle搭建的SSD算法对拍摄数据进行检测并识别；若有野泳者，则触发警报器，将信息上传至相关管理部门，派遣人员对野泳者进行驱散。
 
 ## 项目总览
 本项目共包含如下文件：
@@ -35,7 +35,7 @@
 ### 数据准备
 1. VOC2007格式数据集制作简介，按照[此文档](https://blog.csdn.net/gulingfengze/article/details/79639111)即可。
 
-2. 数据集：\[[Swim2000](https://pan.baidu.com/s/1KPC4tZZDwOjCnFLhzCZ5aA)\],将下载好的数据解压，放到data/VOCdevkit/VOC2007/下面。
+2. 数据集：Swim2000\[[下载地址](https://pan.baidu.com/s/1KPC4tZZDwOjCnFLhzCZ5aA)\],将下载好的数据解压，放到data/VOCdevkit/VOC2007/下面。
 
 3. 进入```data/VOCdevkit/VOC2007```目录，运行```python split.py```即可在```data/VOCdevkit/VOC2007/ImageSets/Main```下生成test.txt、train.txt、trainval.txt和val.txt。核心函数为：
 
