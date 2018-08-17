@@ -95,14 +95,14 @@
     文件共两个字段，第一个字段为图像文件的相对路径，第二个字段为对应标注文件的相对路径。
 
 ### 开发环境
-硬件环境：GTX Titan X, 内存64G
-软件环境：Ubuntu 16.04，cuda 9.0，cudnn7.0，anaconda，python2.7, paddlepaddle 0.11.0
+1. 硬件环境：GTX Titan X, 内存64G
+2. 软件环境：Ubuntu 16.04，cuda 8.0，cudnn5.0，anaconda，python2.7, paddlepaddle 0.11.0
 
 ### 预训练模型准备
 我们提供了一个转换好的模型，并将其放置路径为```vgg/vgg_model.tar.gz```。
 
 ### 模型训练
-直接执行```python train.py```即可进行训练。需要注意本示例仅支持CUDA GPU环境，无法在CPU上训练，主要因为使用CPU训练速度很慢，实践中一般使用GPU来处理图像任务，这里实现采用硬编码方式使用cuDNN，不提供CPU版本。```train.py```的一些关键执行逻辑：
+直接执行```python train.py```即可进行训练。需要注意本示例建议CUDA GPU环境，因为使用CPU训练速度很慢，实践中一般使用GPU来处理图像任务，这里实现采用硬编码方式使用cuDNN，不提供CPU版本（可通过修改实现CPU运行）。```train.py```的一些关键执行逻辑：
 
 ```python
 paddle.init(use_gpu=True, trainer_count=1)
@@ -125,8 +125,14 @@ train(train_file_list='./data/trainval.txt',
 3. 调用```train```执行训练，其中```train_file_list```指定训练数据列表，```dev_file_list```指定评估数据列表，```init_model_path```指定预训练模型位置。
 4. 训练过程中会打印一些日志信息，每训练1个batch会输出当前的轮数、当前batch的cost及mAP（mean Average Precision，平均精度均值），每训练一个pass，会保存一次模型，默认保存在```checkpoints```目录下（注：需事先创建）。
 
-VGG-SDD 300x300在Swim2000数据集上的mAP可达到88.53%。
+VGG-SDD 300x300在Swim2000及Swim6000数据集上训练结果如下所示：
 
+<table>
+<caption>表2. 训练结果</caption>
+<tr><th>数据集</th><th>mAP</th></tr>
+<tr><td>Swim2000</td><td>86.58%</td></tr>
+<tr><td>Swim6000</td><td>88.53%</td></tr>
+<table>
 
 ### 模型评估
 执行```python eval.py```即可对模型进行评估，```eval.py```的关键执行逻辑如下：
