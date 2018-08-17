@@ -196,3 +196,12 @@ infer(
 
 图3. SSD300x300 检测可视化示例
 </p>
+
+### 模型推理时间和体积对比
+
+<table>
+<caption>表3. 推理时间和体积</caption>
+<tr><th>模型</th><th>大小</th><th>CPU/GPU</th><th>处理一张图片耗时</th></tr>
+<tr><td>VGG-SSD</td><td>96.9M</td><td>CPU:i7-5820K</td><td>505ms</td></tr>
+<tr><td></td><td></td><td>GPU:GTX TITAN X</td><td>64ms</td></tr>
+<table>
