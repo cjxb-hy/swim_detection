@@ -194,11 +194,10 @@ infer(
 <img src="images/d5.jpg" height=150 width=200 hspace='10'/>
 <img src="images/d6.jpg" height=150 width=200 hspace='10'/>
 
-图3. SSD300x300 检测可视化示例
+图2. VGG-SSD300x300 检测可视化示例
 </p>
 
 ### 模型推理时间和体积对比
-
 <table>
 <caption>表3. 推理时间和体积</caption>
 <tr><th>模型</th><th>大小</th><th>CPU/GPU</th><th>处理一张图片耗时</th></tr>
